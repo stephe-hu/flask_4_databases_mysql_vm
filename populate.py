@@ -37,23 +37,28 @@ def insert_fake_data(engine, num_patients=100, num_medications=20, num_patient_m
             first_name = fake.first_name()
             last_name = fake.last_name()
             date_of_birth = fake.date_of_birth(minimum_age=10, maximum_age=90)
-            connection.execute(f"INSERT INTO patients (first_name, last_name, date_of_birth) VALUES ('{first_name}', '{last_name}', '{date_of_birth}')") # Noqa: E501
+            query = text("INSERT INTO patients (first_name, last_name, date_of_birth) VALUES ""(:first_name, :last_name, :date_of_birth)")
+            connection.execute(query, {"first_name": first_name, "last_name": last_name, "date_of_birth": date_of_birth})
 
         # Insert sample medications into medications
         for medication in sample_medications:
-            connection.execute(f"INSERT INTO medications (medication_name) VALUES ('{medication}')") # Noqa: E501
+            query = text("INSERT INTO medications (medication_name) VALUES (:medication_name)")
+            connection.execute(query, {"medication_name": medication})
         
         # Fetch all patient IDs and medication IDs
-        patient_ids = [row[0] for row in connection.execute("SELECT patient_id FROM patients").fetchall()] # Noqa: E501
-        medication_ids = [row[0] for row in connection.execute("SELECT medication_id FROM medications").fetchall()] # Noqa: E501
+        query = text("SELECT patient_id FROM patients")
+        patient_ids = [row[0] for row in connection.execute(query).fetchall()]
+        query2 = text("SELECT medication_id FROM medications")
+        medication_ids = [row[0] for row in connection.execute(query2).fetchall()]
         
         # Insert fake data into patient_medications
         for _ in range(num_patient_medications):
             patient_id = random.choice(patient_ids)
             medication_id = random.choice(medication_ids)
             prescribed_date = fake.date_between(start_date="-5y", end_date="today")
-            connection.execute(f"""INSERT INTO patient_medications (patient_id, medication_id, prescribed_date) VALUES ({patient_id}, {medication_id}, '{prescribed_date}')""") # Noqa: E501
-
+            query = text("INSERT INTO patient_medications (patient_id, medication_id, prescribed_date) VALUES (:patient_id, :medication_id, :prescribed_date)")
+            connection.execute(query, {"patient_id": patient_id, "medication_id": medication_id, "prescribed_date": prescribed_date})
+        connection.commit() 
 if __name__ == "__main__":
     insert_fake_data(db_engine)
     print("Fake data insertion complete!")
