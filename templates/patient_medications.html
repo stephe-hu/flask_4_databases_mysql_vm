@@ -1,0 +1,27 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<h1>Patient Medications</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Patient Medication ID</th>
+            <th>Patient ID</th>
+            <th>Medication ID</th>
+            <th>Prescribed Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.patient_medication_id }}</td>
+            <td>{{ row.patient_id }}</td>
+            <td>{{ row.medication_id }}</td>
+            <td>{{ row.prescribed_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

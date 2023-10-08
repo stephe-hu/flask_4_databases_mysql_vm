@@ -10,4 +10,3 @@
 7. Enter `sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf` to edit the MySQL configuration file. Change the `bind-address` to `0.0.0.0`. Save the file and exit.
 8. Enter `sudo service mysql restart` to restart MySQL. 
 9. Open up MySQL Workbench and create a new connection. Enter the VM's public IP address, username, and password. Click on `Test Connection` and then `OK`. The IP address can be found on the VM's overview page in Azure Portal. And the username and password are the ones created in step 6.
-

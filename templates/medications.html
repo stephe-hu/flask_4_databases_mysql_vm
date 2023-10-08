@@ -1,0 +1,27 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<h1>Medications</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Medication ID</th>
+            <th>Medication Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.medication_id }}</td>
+            <td>{{ row.medication_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+   
+   
+   
