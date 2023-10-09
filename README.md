@@ -10,3 +10,9 @@
 7. Enter `sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf` to edit the MySQL configuration file. Change the `bind-address` to `0.0.0.0`. Save the file and exit.
 8. Enter `sudo service mysql restart` to restart MySQL. 
 9. Open up MySQL Workbench and create a new connection. Enter the VM's public IP address, username, and password. Click on `Test Connection` and then `OK`. The IP address can be found on the VM's overview page in Azure Portal. And the username and password are the ones created in step 6.
+
+## Database Schema Rationale
+My first table is the patients table with the patient_id as the PK. My second table is the medications table with the medication_id as the PK. My third table is the patient_medications table with the patient_medication_id as the PK and the patient_id and medication_id as the FKs. I chose to use a many-to-many relationship because a patient can have many medications and a medication can be taken by many patients. This schema allows me to associate a patient with a medication(s) for a specific prescription.
+
+## Challenges
+I did not have any major technical issues with this assignment as I had already solved the major issues in the previous assignment. One thing that I noticed when I was playing around with formatting the html files was that how the data is displayed on the flask app changes depending on  if I included the `{% extends "base.html" %} {% block content %}` and `{% endblock %}` tags. I have included two screenshots of the `patients.html` to display the difference. I think this is because of the tags that are included in the `base.html` file. I decided to use the tags in my final code because I think it looks better for an app and I like the interactions in the app better.
